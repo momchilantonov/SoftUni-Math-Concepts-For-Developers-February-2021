@@ -48,38 +48,23 @@ def get_mean_times_with_array(exec_time_func, sizes, num_start=0, num_stop=100, 
     return mean_times
 
 
-def get_speedup_factors(py_times_list, np_times_list, py_times_array, np_times_array):
-    speedup_list_list = []
-    speedup_list_array = []
-    speedup_array_list = []
-    speedup_array_array = []
-    for idx in range(len(np_times_list)):
-        if not py_times_list[idx] == 0:
-            speedup_list_list.append(np_times_list[idx] / py_times_list[idx])
+def get_speedup_factor(py_times, np_times):
+    speedup = []
+    for idx in range(len(np_times)):
+        if not py_times[idx] == 0:
+            speedup.append(np_times[idx] / py_times[idx])
         else:
-            speedup_list_list.append(0)
-        if not py_times_list[idx] == 0:
-            speedup_list_array.append(np_times_array[idx] / py_times_list[idx])
-        else:
-            speedup_list_array.append(0)
-        if not py_times_array[idx] == 0:
-            speedup_array_list.append(np_times_list[idx] / py_times_array[idx])
-        else:
-            speedup_array_list.append(0)
-        if not py_times_array[idx] == 0:
-            speedup_array_array.append(np_times_array[idx] / py_times_array[idx])
-        else:
-            speedup_array_array.append(0)
-    return speedup_list_list, speedup_list_array, speedup_array_list, speedup_array_array
+            speedup.append(0)
+    return speedup
 
 
-def plot_times(sizes, py_times_list, np_times_list, py_times_array, np_times_array):
-    plt.plot(py_times_list, color="red")
-    plt.plot(np_times_list, color="blue")
-    plt.plot(py_times_array, color="orange")
-    plt.plot(np_times_array, color="green")
+def plot_times(sizes, py_times_ll, np_times_ll, py_times_ar, np_times_ar):
+    plt.plot(py_times_ll, color="red")
+    plt.plot(np_times_ll, color="blue")
+    plt.plot(py_times_ar, color="orange")
+    plt.plot(np_times_ar, color="green")
     plt.xlim(0, len(sizes))
-    plt.ylim(0, max(py_times_array) * 1.05)
+    plt.ylim(-0.1, max(py_times_ar) * 1.05)
     plt.xticks([0, 2, 4, 6, 8, 10], ["10²", "10³", "10⁴", "10⁵", "10⁶", "10⁷"], rotation=45)
     plt.yticks(rotation=45)
     plt.xlabel("array/list size", loc="center", fontsize="x-large")
@@ -91,20 +76,16 @@ def plot_times(sizes, py_times_list, np_times_list, py_times_array, np_times_arr
     plt.show()
 
 
-def plot_speedup_factors(sizes, speedup_list_list, speedup_list_array, speedup_array_list, speedup_array_array):
-    plt.plot(speedup_list_list, color="red")
-    plt.plot(speedup_list_array, color="blue")
-    plt.plot(speedup_array_list, color="orange")
-    plt.plot(speedup_array_array, color="green")
+def plot_speedup_factor(sizes, speedup):
+    plt.plot(speedup, color="blue")
     plt.xlim(0, len(sizes))
-    plt.ylim(0, max(speedup_list_list) * 1.05)
+    plt.ylim(0, max(speedup) * 1.05)
     plt.xticks([0, 2, 4, 6, 8, 10], ["10²", "10³", "10⁴", "10⁵", "10⁶", "10⁷"], rotation=45)
     plt.yticks(rotation=45)
     plt.xlabel("array/list size", loc="center", fontsize="x-large")
     plt.ylabel("speedup factor", loc="center", fontsize="x-large")
-    plt.legend(["PY list / NP list", "PY list / NP array", "PY array / NP list", "PY array / NP array"],
-               fontsize="large", loc='upper left')
-    plt.title("SpeedUp Factors", fontsize="xx-large")
+    plt.legend(["NumPySumTimes(array)/PythonSum(list)"], fontsize="large", loc='upper left')
+    plt.title("SpeedUp Factor", fontsize="xx-large")
     plt.grid()
     plt.show()
 
@@ -114,7 +95,6 @@ np_times_list = get_mean_times_with_list(sum_array_with_np, array_sizes)
 py_times_list = get_mean_times_with_list(sum_array_with_py, array_sizes)
 np_times_array = get_mean_times_with_array(sum_array_with_np, array_sizes)
 py_times_array = get_mean_times_with_array(sum_array_with_py, array_sizes)
-spf_list_list, spf_list_array, spf_array_list, spf_array_array \
-    = get_speedup_factors(py_times_list, np_times_list, py_times_array, np_times_array)
+speedup_factor = get_speedup_factor(py_times_list, np_times_array)
 plot_times(array_sizes, py_times_list, np_times_list, py_times_array, np_times_array)
-plot_speedup_factors(array_sizes, spf_list_list, spf_list_array, spf_array_list, spf_array_array)
+plot_speedup_factor(array_sizes, speedup_factor)
