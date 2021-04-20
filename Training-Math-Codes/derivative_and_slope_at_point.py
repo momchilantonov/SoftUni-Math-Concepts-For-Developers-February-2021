@@ -13,35 +13,33 @@ def calculate_derivative_at_point(function, point, precision=1e-7):
     return (function(point+precision)-function(point-precision)) / (2 * precision)
 
 
-# def plot_derivative(function, derivative=None, min_x=-10, max_x=10):
-#     vectorized_function = np.vectorize(function)
-#     x = np.linspace(min_x, max_x, 1000)
-#     y = vectorized_function(x)
-#
-#     if derivative is None:
-#         dy = np.vectorize(calculate_derivative_at_point)(function, x)
-#     else:
-#         dy = np.vectorize(derivative)(x)
-#
-#     plt.plot(x, y, label="Function", color="blue")
-#     plt.plot(x, dy, label="Derivative", color="red")
-#     plt.xlabel("x", fontsize="x-large")
-#     plt.ylabel("y", fontsize="x-large")
-#     plt.legend(loc="lower right")
-#     plt.title("Function and its Derivative")
-#     plt.grid()
-#     plt.show()
-#
-#
-# plot_derivative(lambda x: x ** 2, lambda x: 2 * x) # The derivative is calculated by hand
-# plot_derivative(lambda x: x ** 2) # The derivative is not pre-calculated, should be calculated inside the function
-# plot_derivative(np.sin)
+def plot_derivative(function, derivative=None, min_x=-10, max_x=10):
+    x = np.linspace(min_x, max_x, 1000)
+    y = np.vectorize(function)(x)
+
+    if derivative is None:
+        dy = np.vectorize(calculate_derivative_at_point)(function, x)
+    else:
+        dy = np.vectorize(derivative)(x)
+
+    plt.plot(x, y, label="Function", color="blue")
+    plt.plot(x, dy, label="Derivative", color="red")
+    plt.xlabel("x", fontsize="x-large")
+    plt.ylabel("y", fontsize="x-large")
+    plt.legend(loc="lower right")
+    plt.title("Function and its Derivative")
+    plt.grid()
+    plt.show()
+
+
+plot_derivative(lambda x: x ** 2, lambda x: 2 * x)  # The derivative is calculated by hand
+plot_derivative(lambda x: x ** 2)  # The derivative is not pre-calculated, should be calculated inside the function
+plot_derivative(np.sin)
 
 
 def plot_derivative_at_point(function, point, derivative=None, min_x=-10, max_x=10):
-    vectorized_function = np.vectorize(function)
     x = np.linspace(min_x, max_x, 1000)
-    y = vectorized_function(x)
+    y = np.vectorize(function)(x)
 
     if derivative is None:
         slope = calculate_derivative_at_point(function, point)
@@ -64,7 +62,7 @@ def plot_derivative_at_point(function, point, derivative=None, min_x=-10, max_x=
 
 
 plot_derivative_at_point(lambda x: x ** 2, 2)
-plot_derivative_at_point(lambda x: x ** 2, 2, min_x = 0, max_x = 4)
+plot_derivative_at_point(lambda x: x ** 2, 2, min_x=0, max_x=4)
 for x in np.arange(-8, 10, 2):
     plot_derivative_at_point(lambda x: x ** 2, x)
 for x in np.arange(-8, 10, 2):
@@ -72,9 +70,8 @@ for x in np.arange(-8, 10, 2):
 
 
 def animated_plot_derivative_at_point(function, point, derivative=None, min_x=-10, max_x=10):
-    vectorized_function = np.vectorize(function)
     x = np.linspace(min_x, max_x, 1000)
-    y = vectorized_function(x)
+    y = np.vectorize(function)(x)
 
     if derivative is None:
         slope = calculate_derivative_at_point(function, point)
