@@ -82,15 +82,6 @@ def animated_plot_derivative_at_point(function, point, derivative=None, min_x=-1
     tangent_line_x = np.linspace(point-2, point+2, 10)
     tangent_line_y = slope * tangent_line_x+intercept
 
-    vectorized_function = np.vectorize(function)
-    x = np.linspace(min_x, max_x, 1000)
-    y = vectorized_function(x)
-
-    if derivative is None:
-        dy = np.vectorize(calculate_derivative_at_point)(function, x)
-    else:
-        dy = np.vectorize(derivative)(x)
-
     plt.plot(x, y, color="blue")
     plt.plot(tangent_line_x, tangent_line_y, color="red")
     plt.xlabel("x", fontsize="x-large")
