@@ -12,7 +12,7 @@ def get_people_count():
 
 def plot_birthday_paradox(*args):
     plt.plot(args[0], label="Probability of a matching pair", color="blue")
-    plt.scatter(args[1], args[2], label=f"Probability {(args[2] * 100):.2f}% at {args[1]} people", color="red")
+    plt.scatter(args[1], args[2], label=f"Probability > 50%", color="red")
     plt.vlines(args[1], ymin=0, ymax=args[2], color="green", linestyle="--")
     plt.hlines(args[2], xmin=0, xmax=args[1], color="green", linestyle="--")
     plt.xlim(0, 100)
@@ -27,10 +27,10 @@ def plot_birthday_paradox(*args):
     plt.show()
 
 
-days_range = np.arange(365)
+days_range = np.arange(366)
 matching_probabilities = [calculating_matching_probability(people) for people in days_range]
 people_count = int(np.ceil(get_people_count()))
 probability_at_people_count = matching_probabilities[people_count]
 plot_birthday_paradox(matching_probabilities, people_count, probability_at_people_count)
-print(people_count)
-print(probability_at_people_count)
+# print(f"People count at probability more than 50% - {people_count}")
+# print(f"Exactly probability at {people_count} people - {probability_at_people_count}")
