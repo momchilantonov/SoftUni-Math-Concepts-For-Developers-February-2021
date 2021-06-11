@@ -9,3 +9,4 @@ If you are interested in Artificial Intelligence, Machine Learning, Deep Learnin
 - Documenting the whole process: setting and analyzing the task, hypothesis, model, implementation, results
 - Numerical methods
 # Certificate
+# <p align="center"> ![alt text](https://github.com/momchilantonov/SoftUni-Math-Concepts-For-Developers-February-2021/blob/main/Math%20Concepts%20for%20Developers%20-%20February%202021%20-%20Certificate.jpeg) <p>
